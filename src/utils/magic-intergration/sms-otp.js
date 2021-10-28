@@ -14,7 +14,7 @@ function App() {
   }
   
   const DID = await magicClient.auth.loginWithSMS({
-    phoneNumber: '+14151231234',
+    phoneNumber: '+254726111690',//pass the phone input value to get otp sms
   });
   // Consume decentralized identity (DID)
   
