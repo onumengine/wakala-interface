@@ -5,7 +5,7 @@
  * params walletBalance and currencyTicker
  * walletBalance is in cUSD and currency ticker eg:KES, CAD etc
  */
- function currencyConverter(walletBalance, currencyTicker){
+ export function currencyConverter(walletBalance, currencyTicker){
     const getCurrency = async () => {
         try {
           let response = await fetch(
