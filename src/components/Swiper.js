@@ -5,27 +5,16 @@
  * or to get out of the flow when the last screen is reached
  */
 
-import React, { Component } from 'react';
-import {
-    Dimensions,       // Detects screen dimensions
-    Platform,         // Detects platform running the app
-    ScrollView,       // Handles navigation between screens
-    StyleSheet,       // CSS-like styles
-    View,             // Container component
-    TouchableOpacity,
-    Text,
-    Image
-//    Button
-} from 'react-native';
-import {SLIDER_BUTTON} from "../assets/images";
-import appTheme, {COLORS} from "../consts/theme";
+import React, {Component} from 'react';
+import {Dimensions, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import appTheme, {COLORS, FONTS} from "../consts/theme";
 import {LinearGradient} from "expo-linear-gradient";
 //import Button from './Button';
-import { Feather } from "@expo/vector-icons";
+import {Feather} from "@expo/vector-icons";
 import ProgressCircle from "./ProgressCircle";
 
 // Detect screen width and height
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 export default class Swiper extends Component {
 
@@ -112,10 +101,10 @@ export default class Swiper extends Component {
      * @param {object} e native event
      */
     onScrollEndDrag = e => {
-        const { contentOffset: { x: newOffset } } = e.nativeEvent,
-            { children } = this.props,
-            { index } = this.state,
-            { offset } = this.internals;
+        const {contentOffset: {x: newOffset}} = e.nativeEvent,
+            {children} = this.props,
+            {index} = this.state,
+            {offset} = this.internals;
 
         // Update internal isScrolling state
         // if swiped right on the last slide
@@ -167,7 +156,7 @@ export default class Swiper extends Component {
             y = 0;
 
         // Call scrollTo on scrollView component to perform the swipe
-        this.scrollView && this.scrollView.scrollTo({ x, y, animated: true });
+        this.scrollView && this.scrollView.scrollTo({x, y, animated: true});
 
         // Update internal scroll state
         this.internals.isScrolling = true;
@@ -190,7 +179,9 @@ export default class Swiper extends Component {
      */
     renderScrollView = pages => {
         return (
-            <ScrollView ref={component => { this.scrollView = component; }}
+            <ScrollView ref={component => {
+                this.scrollView = component;
+            }}
                         {...this.props}
                         contentContainerStyle={[styles.wrapper, this.props.style]}
                         onScrollBeginDrag={this.onScrollBegin}
@@ -215,17 +206,17 @@ export default class Swiper extends Component {
             return null;
         }
 
-        const ActiveDot = <View style={[styles.dot, styles.activeDot]} />,
-            Dot = <View style={styles.dot} />;
+        const ActiveDot = <View style={[styles.dot, styles.activeDot]}/>,
+            Dot = <View style={styles.dot}/>;
 
         let dots = [];
 
         for (let key = 0; key < this.state.total; key++) {
             dots.push(key === this.state.index
                 // Active dot
-                ? React.cloneElement(ActiveDot, { key })
+                ? React.cloneElement(ActiveDot, {key})
                 // Other dots
-                : React.cloneElement(Dot, { key })
+                : React.cloneElement(Dot, {key})
             );
         }
 
@@ -246,23 +237,29 @@ export default class Swiper extends Component {
         const lastScreen = this.state.index === this.state.total - 1;
         return (
             <View pointerEvents="box-none" style={[styles.buttonWrapper, styles.fullScreen]}>
-                <TouchableOpacity onPress={lastScreen ? () => this.props.navigation.navigate("Signup") : () => this.swipe()}>
+                <TouchableOpacity
+                    onPress={lastScreen ? () => this.props.navigation.navigate("Signup") : () => this.swipe()}>
                     <ProgressCircle
-                        value={(1+this.state.index)/this.state.total}
+                        value={(1 + this.state.index) / this.state.total}
                         size={58}
                         thickness={3}
                         color={COLORS.primary}
                         unfilledColor={COLORS.backgroundColor}
                         animationMethod="spring"
-                        animationConfig={{ speed: 4 }}>
+                        animationConfig={{speed: 4}}>
                         <LinearGradient
                             colors={COLORS.buttonGradient}
                             style={styles.button}>
-                            <Feather name="arrow-right" size={25} color="white" />
+                            <Feather name="arrow-right" size={25} color="white"/>
                         </LinearGradient>
                     </ProgressCircle>
                 </TouchableOpacity>
-
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("Signup")}
+                                  style={{
+                                      position: "absolute",
+                                      bottom: 0
+                                  }}><Text style={FONTS.body4}>Skip</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -270,14 +267,11 @@ export default class Swiper extends Component {
     /**
      * Render the component
      */
-    render = ({ children } = this.props) => {
+    render = ({children} = this.props) => {
         return (
             <View style={[styles.container, styles.fullScreen]}>
-                {/* Render screens */}
                 {this.renderScrollView(children)}
-                {/* Render Continue or Done button */}
                 {this.renderButton()}
-
             </View>
         );
     }
@@ -330,7 +324,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         flexDirection: 'column',
         position: 'absolute',
-        bottom: appTheme.SIZES.height*0.09,
+        bottom: appTheme.SIZES.height * 0.09,
         left: 0,
         flex: 1,
         paddingHorizontal: 10,

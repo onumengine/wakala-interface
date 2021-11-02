@@ -9,6 +9,7 @@ import {
 
 import {
   DrawerContentScrollView,
+  DrawerItem,
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { AntDesign } from "@expo/vector-icons";
@@ -87,6 +88,10 @@ const CustomDrawer = (props) => {
             }}
           >
             <DrawerItemList {...props} />
+            <DrawerItem
+              label="Sign out"
+              onPress={() => props.navigation.navigate("Landing")}
+            ></DrawerItem>
           </View>
         </DrawerContentScrollView>
 

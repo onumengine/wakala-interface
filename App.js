@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -17,13 +17,16 @@ import {
   Rubik_700Bold,
 } from "@expo-google-fonts/rubik";
 
-import { Button } from "react-native";
-
 import OnboardingScreen from "./src/screens/Onboarding";
 import HomeScreen from "./src/screens/Home";
 import SignUpScreen from "./src/screens/Auth";
 import CustomDrawer from "./src/components/CustomDrawer";
 import { COLORS, SIZES } from "./src/consts/theme";
+import VerifyNumber from "./src/screens/Auth/VerifyNumber";
+import ToC from "./src/screens/Auth/ToC";
+import AccountAddress from "./src/screens/Settings/AccountAddress";
+import PinDoNotMatch from "./src/screens/Settings/AccountAddress";
+import ContactSupportScreen from "./src/screens/Help/ContactSupportScreen";
 
 const RootStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -60,6 +63,21 @@ const Home = () => {
         component={HomeScreen}
         options={{ headerShown: false }}
       />
+      <Drawer.Screen
+        name="Account Address"
+        component={AccountAddress}
+        // options={{ headerShown: true }}
+      />
+      <Drawer.Screen
+        name="Pin"
+        component={PinDoNotMatch}
+        // options={{ headerShown: false }}
+      />
+      <Drawer.Screen
+        name="Support"
+        component={ContactSupportScreen}
+        // options={{ headerShown: false }}
+      />
     </Drawer.Navigator>
   );
 };
@@ -77,15 +95,12 @@ const App = () => {
   });
 
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-
   const handleSignIn = () => {
     // TODO implement real sign in mechanism
-
     setIsAuthenticated(true);
   };
   const handleSignOut = () => {
     // TODO implement real sign in mechanism
-
     setIsAuthenticated(false);
   };
 
@@ -95,20 +110,19 @@ const App = () => {
     return (
       <NavigationContainer>
         <RootStack.Navigator screenOptions={{ headerShown: false }}>
-          {isAuthenticated ? (
-            <RootStack.Screen
-              name="Home"
-              component={Home}
-              options={{ headerShown: false }}
-            />
-          ) : (
-            <>
-              <RootStack.Screen name="Landing" component={OnboardingScreen} />
-              <RootStack.Screen name="Signup">
-                {(props) => <SignUpScreen {...props} onSignIn={handleSignIn} />}
-              </RootStack.Screen>
-            </>
-          )}
+          <RootStack.Screen name="Landing" component={OnboardingScreen} />
+          <RootStack.Screen name="Signup">
+            {(props) => <SignUpScreen {...props} onSignIn={handleSignIn} />}
+          </RootStack.Screen>
+          <RootStack.Screen name="VerifyNumber" component={VerifyNumber} />
+          <RootStack.Screen name="ToC">
+            {(props) => <ToC {...props} onSignIn={handleSignIn} />}
+          </RootStack.Screen>
+          <RootStack.Screen
+            name="Home"
+            component={Home}
+            options={{ headerShown: false }}
+          />
         </RootStack.Navigator>
       </NavigationContainer>
     );

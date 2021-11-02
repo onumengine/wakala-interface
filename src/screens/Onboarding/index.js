@@ -15,19 +15,16 @@ export default class OnboardingScreen extends Component {
     render() {
         return (
             <Swiper navigation={this.props.navigation}>
-                {/* First screen */}
                 <View style={styles.slide}>
                     <Image source={SLIDER_IMAGE_001} style={styles.image} />
                     <Text style={styles.header}>Easy</Text>
                     <Text style={styles.text}>Wakala makes it easy for you to top up your cUSD wallet. Both Add or withdraw cUSD</Text>
                 </View>
-                {/* Second screen */}
                 <View style={styles.slide}>
                     <Image source={SLIDER_IMAGE_002} style={styles.image} />
                     <Text style={styles.header}>Community</Text>
                     <Text style={styles.text}>Wakala is a community, owned by its members.</Text>
                 </View>
-                {/* Third screen */}
                 <View style={styles.slide}>
                     <Image source={SLIDER_IMAGE_003} style={styles.image} />
                     <Text style={styles.header}>Speed</Text>
@@ -36,17 +33,12 @@ export default class OnboardingScreen extends Component {
                 <View style={styles.slide}>
                     <Image source={SLIDER_IMAGE_004} style={styles.image} />
                     <Text style={styles.header}>Earn</Text>
-                    <Text style={styles.text}>Want to be a community yourself? Fullfill requests and earn commissions. the faster you fulfill, the more you earn.</Text>
+                    <Text style={styles.text}>Want to be a community yourself? Fulfill requests and earn commissions. the faster you fulfill, the more you earn.</Text>
                 </View>
             </Swiper>
         );
     }
 }
-
-const iconStyles = {
-    size: 100,
-    color: '#FFFFFF',
-};
 
 const styles = StyleSheet.create({
     // Slide styles
