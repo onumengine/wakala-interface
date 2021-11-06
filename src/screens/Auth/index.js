@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   SafeAreaView,
@@ -12,10 +12,56 @@ import { LinearGradient } from "expo-linear-gradient";
 import CountryFlag from "react-native-country-flag";
 import { COLORS, FONTS, SIZES } from "../../consts/theme";
 import { Feather } from "@expo/vector-icons";
+import { Magic } from '@magic-sdk/react-native';
+
 
 export default function SignUpScreen({ navigation }) {
-  const [countryCode, setCountryCode] = React.useState("+256");
+  const [countryCode, setCountryCode] = React.useState("+254");
   const [number, setNumber] = React.useState("");
+  const [user, setUser] = React.useState('');
+
+  const magic = new Magic('pk_live_5B2A9951805695BB', {
+    network: {
+      rpcUrl: 'https://alfajores-forno.celo-testnet.org'
+    }
+  });
+
+
+    // Trigger magic link for user to login / generate wallet
+    const login = async () => {
+      try {
+        await magic.auth.loginWithSMS({
+          phoneNumber: countryCode+number//pass the phone input value to get otp sms
+        });
+        // Consume decentralized identity (DID)
+        magic.user.getMetadata().then(setUser);
+        //TODO Navigate to Terms and Conditions Page
+
+      } catch(err) {
+        alert(err);
+      }
+    };
+  
+    // Logout of Magic session
+    const logout = async () => {
+      await magic.user.logout();
+      setUser('');
+      console.log('logged out')
+    };
+
+  // If user is logged in, fetch user wallet balance and the `message` variable value from the smart contract
+  /*useEffect(() => {
+    magic.user.isLoggedIn().then(isLoggedIn => {
+      if (!isLoggedIn) return setUser('');
+      magic.user.getMetadata().then(user => {
+        setUser(user);
+        fetchBalance(user.publicAddress);
+        fetchContractMessage();
+      });
+    })
+  }, [])*/
+
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
@@ -65,7 +111,7 @@ export default function SignUpScreen({ navigation }) {
                     borderRadius: 10,
                   },
                 ]}
-                placeholder="Type here your phone number!"
+                placeholder="Type your phone number here!"
               >
                 <Text style={FONTS.body3}>Kenya</Text>
                 <TouchableOpacity>
@@ -98,7 +144,7 @@ export default function SignUpScreen({ navigation }) {
             >
               <TextInput
                 style={styles.countryInput}
-                placeholder="+256"
+                placeholder="+254"
                 onChangeText={(text) => setCountryCode(text)}
                 defaultValue={countryCode}
               />
@@ -106,15 +152,16 @@ export default function SignUpScreen({ navigation }) {
               <TextInput
                 style={styles.numberInput}
                 placeholder="Type here your phone number!"
-                onChangeText={(text) => setNumber(text)}
-                defaultValue={number}
+                value={number}
+                onChangeText={text => setNumber(text)}
+                // defaultValue={number}
               />
             </View>
           </View>
         </View>
 
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity onPress={() => navigation.navigate("VerifyNumber")}>
+          <TouchableOpacity onPress={() => login()}>
             <LinearGradient
               colors={COLORS.buttonGradient}
               start={[1, 0]}
@@ -125,7 +172,7 @@ export default function SignUpScreen({ navigation }) {
             </LinearGradient>
           </TouchableOpacity>
           <Text style={[FONTS.body3, styles.orText]}>or</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => logout()}>
             <LinearGradient
               colors={["rgba(232, 200, 223, 1)", "rgba(204, 198, 210, 1)"]}
               start={[1, 0]}
@@ -136,6 +183,7 @@ export default function SignUpScreen({ navigation }) {
             </LinearGradient>
           </TouchableOpacity>
         </View>
+      <magic.Relayer />
       </View>
     </SafeAreaView>
   );
