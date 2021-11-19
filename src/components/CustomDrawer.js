@@ -17,12 +17,17 @@ import { LinearGradient } from "expo-linear-gradient";
 
 import { SIZES } from "../consts/theme";
 import CountryInfo from "../utils/CountryInfo";
+import { Magic } from "@magic-sdk/react-native";
+
 
 const CustomDrawer = (props) => {
   const [phone, setPhone] = useState("+254 706 427718");
   const [flag, setFlag] = useState("");
   const [KSH, setKSH] = useState("567.37");
   const [cUSD, setCUSD] = useState("5.67");
+
+  const [user, setUser] = React.useState("");
+
 
   function pickFlag() {
     var phone_split = phone.split(" ");
@@ -35,9 +40,19 @@ const CustomDrawer = (props) => {
     });
   }
 
+  const magic = new Magic("pk_live_5B2A9951805695BB");
+
   useEffect(() => {
     pickFlag();
   }, [phone]);
+
+    // Logout of Magic session
+    const logout = async () => {
+      await magic.user.logout();
+      setUser("");
+      console.log("logged out");
+
+    };
 
   return (
     <Fragment>
@@ -90,7 +105,7 @@ const CustomDrawer = (props) => {
             <DrawerItemList {...props} />
             <DrawerItem
               label="Sign out"
-              onPress={() => props.navigation.navigate("Landing")}
+              onPress={() => logout()}
             ></DrawerItem>
           </View>
         </DrawerContentScrollView>

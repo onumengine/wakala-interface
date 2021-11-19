@@ -149,6 +149,7 @@ const App = () => {
             {(props) => <ToC {...props} onSignIn={handleSignIn} />}
           </RootStack.Screen>
           <RootStack.Screen name="RecoveryPhrase" component={RecoveryPhrase} />
+          <RootStack.Screen name="Home Screen" component={HomeScreen} />
           <RootStack.Screen name="PinDoNotMatch" component={PinDoNotMatch} />
           <RootStack.Screen name="Account Address" component={AccountAddress} />
           <RootStack.Screen
