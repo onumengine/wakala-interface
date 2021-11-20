@@ -96,12 +96,13 @@ export default function SignUpScreen({ navigation }) {
                 Enter Phone number to Login or sign up
               </Text>
               <View
-                style={{
-                  marginTop: 20,
-                  backgroundColor: COLORS.white,
-                  borderRadius: 10,
-                }}
+                  style={{
+                    marginTop: 20,
+                    backgroundColor: COLORS.white,
+                    borderRadius: 10,
+                  }}
               >
+                
               <PhoneInput
                   ref={phoneInput}
                   defaultValue={value}
@@ -127,92 +128,59 @@ export default function SignUpScreen({ navigation }) {
                 > */}
                   {/* <View
                     style={[
-                      styles.countryInput,
-                      {
-                        borderTopLeftRadius: 10,
-                        justifyContent: "center",
+                      styles.numberInputBlock, {
+                        borderRadius: 10,
+                        borderBottomRightRadius: 0,
+                        borderBottomLeftRadius: 0,
                       },
                     ]}
+                >
+                  <View
+                      style={[
+                        styles.countryInput, {
+                          borderTopLeftRadius: 10,
+                          justifyContent: "center",
+                        },
+                      ]}
                   >
                     <CountryFlag isoCode="ke" size={21} />
-                  </View> */}
-                  {/* <View style={styles.border} /> */}
-                  {/* <View
                     style={[
-                      styles.numberInput,
-                      {
-                        justifyContent: "space-between",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        borderRadius: 10,
+                      styles.border, {
+                        width: SIZES.width * 0.75,
+                        height: 1,
                       },
                     ]}
-                    placeholder="Type your phone number here!"
-                  >
-                    <TextInput
+                />
+                <View
+                    style={[
+                      styles.numberInputBlock, {borderBottomRightRadius: 10,
+                        borderBottomLeftRadius: 10,
+                      },
+                    ]}
+                >
+                  <TextInput
                       style={styles.countryInput}
                       placeholder="+254"
                       onChangeText={(text) => setCountryCode(text)}
                       defaultValue={countryCode}
-                    />
-                    <View style={styles.border} />
-                    <TextInputMask
+                  />
+                  <View style={styles.border} />
+                  <TextInputMask
                       type={"custom"}
                       value={number}
                       options={{
-                        maskType: "BRL",
+                        maskType: 'BRL',
                         withDDD: true,
-                        mask: "999 999 999 999",
+                        mask: '999 999 999 999'
                       }}
                       onChangeText={(formatted, extracted) => {
-                        setNumber(formatted);
+                        setNumber(formatted)
                       }}
                       keyboardType={"phone-pad"}
                       ref={inputRef}
                       style={styles.numberInput}
                       placeholder="Type here your phone number!"
                       placeholderTextColor={COLORS.black}
-                    />
-                  </View> */}
-                {/* </View> */}
-                {/* <View
-                  style={[
-                    styles.border,
-                    {
-                      width: SIZES.width * 0.75,
-                      height: 1,
-                    },
-                  ]}
-                /> */}
-                {/* <View
-                  style={[
-                    styles.numberInputBlock,
-                    { borderBottomRightRadius: 10, borderBottomLeftRadius: 10 },
-                  ]}
-                >
-                  <TextInput
-                    style={styles.countryInput}
-                    placeholder="+254"
-                    onChangeText={(text) => setCountryCode(text)}
-                    defaultValue={countryCode}
-                  />
-                  <View style={styles.border} />
-                  <TextInputMask
-                    type={"custom"}
-                    value={number}
-                    options={{
-                      maskType: "BRL",
-                      withDDD: true,
-                      mask: "(999) 999 999",
-                    }}
-                    onChangeText={(formatted, extracted) => {
-                      setNumber(formatted);
-                    }}
-                    keyboardType={"phone-pad"}
-                    ref={inputRef}
-                    style={styles.numberInput}
-                    placeholder="Type here your phone number!"
-                    placeholderTextColor={COLORS.black}
                   />
                 </View> */}
               </View>
